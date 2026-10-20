@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en" data-mode="demo">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WriteAssist demo</title>
+  <link rel="icon" type="image/png" href="assets/icon-32.png">
+  <link rel="stylesheet" href="app.css?v=1.0.0">
+  <link rel="stylesheet" href="site.css?v=1.0.0">
+</head>
+<body class="demo-body">
+  <header class="demo-top">
+    <a class="demo-brand" href="index.html"><img src="assets/icon-64.png" width="24" height="24" alt=""><span>WriteAssist</span></a>
+    <p class="demo-hint">This page stands in for Word. Edit the text on the left; the panel on the right works the way it does beside a Word document.</p>
+    <a class="wa-btn wa-btn-primary demo-install" href="index.html">Install in Word</a>
+  </header>
+  <div class="demo-stage">
+    <div class="demo-canvas" id="demo-canvas">
+      <div class="demo-page">
+        <div class="demo-editor">
+          <div id="demo-backdrop" class="demo-backdrop" aria-hidden="true"></div>
+          <textarea id="demo-doc" class="demo-doc" spellcheck="false" aria-label="Demo document">Department of Roads (सडक विभाग)
+Progress note: Lalitpur–Godawari road upgrading
+
+The contractor have completed 2.5 km of the road base works. Due to the fact that the monsoon begun early, the remaining works was delayed by three weeks.
+
+In order to ensure the quality, the site engineer will conduct an investigation of the culvert foundations prior to the next payment. We recieve the revised work programme yesterday and it is very important that all stakeholders discuss about it in the next meeting.
+
+Kindly do the needful and revert back with your comments  by Friday. It should be noted that the payment can't be released until the quality report is submitted.</textarea>
+        </div>
+      </div>
+    </div>
+    <aside class="demo-pane" aria-label="WriteAssist panel">
+      <div id="wa-root" class="wa">
+        <div class="wa-boot">Loading WriteAssist&hellip;</div>
+      </div>
+    </aside>
+  </div>
+  <script src="app.js?v=1.0.0"></script>
+</body>
+</html>

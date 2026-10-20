@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- WriteAssist add-in manifest. Every web address below points at the folder where the
+     WriteAssist web files are hosted; Word requires https. -->
+<OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:ov="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="TaskPaneApp">
+  <Id>d56923f9-ea70-49dc-9fc8-8c4ef5a99f08</Id>
+  <Version>1.0.0.0</Version>
+  <ProviderName>WriteAssist</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="WriteAssist"/>
+  <Description DefaultValue="Spelling, grammar, clarity and tone suggestions, plus AI rewriting, right inside Word."/>
+  <IconUrl DefaultValue="{{BASE_URL}}assets/icon-32.png"/>
+  <HighResolutionIconUrl DefaultValue="{{BASE_URL}}assets/icon-64.png"/>
+  <SupportUrl DefaultValue="{{BASE_URL}}index.html"/>
+  <Hosts>
+    <Host Name="Document"/>
+  </Hosts>
+  <Requirements>
+    <Sets DefaultMinVersion="1.1">
+      <Set Name="WordApi" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+  <DefaultSettings>
+    <SourceLocation DefaultValue="{{BASE_URL}}taskpane.html"/>
+  </DefaultSettings>
+  <Permissions>ReadWriteDocument</Permissions>
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/taskpaneappversionoverrides" xsi:type="VersionOverridesV1_0">
+    <Hosts>
+      <Host xsi:type="Document">
+        <DesktopFormFactor>
+          <GetStarted>
+            <Title resid="GetStarted.Title"/>
+            <Description resid="GetStarted.Description"/>
+            <LearnMoreUrl resid="GetStarted.LearnMoreUrl"/>
+          </GetStarted>
+          <FunctionFile resid="Commands.Url"/>
+          <ExtensionPoint xsi:type="PrimaryCommandSurface">
+            <OfficeTab id="TabHome">
+              <Group id="WA.Group">
+                <Label resid="WA.Group.Label"/>
+                <Icon>
+                  <bt:Image size="16" resid="Icon.16x16"/>
+                  <bt:Image size="32" resid="Icon.32x32"/>
+                  <bt:Image size="80" resid="Icon.80x80"/>
+                </Icon>
+                <Control xsi:type="Button" id="WA.OpenButton">
+                  <Label resid="WA.Button.Label"/>
+                  <Supertip>
+                    <Title resid="WA.Button.Label"/>
+                    <Description resid="WA.Button.Tooltip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="Icon.16x16"/>
+                    <bt:Image size="32" resid="Icon.32x32"/>
+                    <bt:Image size="80" resid="Icon.80x80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <TaskpaneId>Office.AutoShowTaskpaneWithDocument</TaskpaneId>
+                    <SourceLocation resid="Taskpane.Url"/>
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+    <Resources>
+      <bt:Images>
+        <bt:Image id="Icon.16x16" DefaultValue="{{BASE_URL}}assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="{{BASE_URL}}assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="{{BASE_URL}}assets/icon-80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="GetStarted.LearnMoreUrl" DefaultValue="{{BASE_URL}}index.html"/>
+        <bt:Url id="Commands.Url" DefaultValue="{{BASE_URL}}commands.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="{{BASE_URL}}taskpane.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="GetStarted.Title" DefaultValue="WriteAssist is ready"/>
+        <bt:String id="WA.Group.Label" DefaultValue="WriteAssist"/>
+        <bt:String id="WA.Button.Label" DefaultValue="WriteAssist"/>
+        <bt:String id="WA.Brand" DefaultValue="WriteAssist"/>
+        <bt:String id="WA.Title.Spelling" DefaultValue="Correct the spelling"/>
+        <bt:String id="WA.Title.Grammar" DefaultValue="Fix the grammar"/>
+        <bt:String id="WA.Title.Punctuation" DefaultValue="Fix the punctuation"/>
+        <bt:String id="WA.Title.Wordy" DefaultValue="Make it concise"/>
+        <bt:String id="WA.Title.Passive" DefaultValue="Use the active voice"/>
+        <bt:String id="WA.Title.Long" DefaultValue="Shorten this sentence"/>
+        <bt:String id="WA.Title.Word" DefaultValue="Choose a stronger word"/>
+        <bt:String id="WA.Title.Tone" DefaultValue="Adjust the tone"/>
+        <bt:String id="WA.Title.AI" DefaultValue="AI suggestion"/>
+        <bt:String id="WA.Sub.Correctness" DefaultValue="Correctness"/>
+        <bt:String id="WA.Sub.Clarity" DefaultValue="Clarity"/>
+        <bt:String id="WA.Sub.Engagement" DefaultValue="Engagement"/>
+        <bt:String id="WA.Sub.Delivery" DefaultValue="Delivery"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="GetStarted.Description" DefaultValue="Choose WriteAssist on the Home tab to check spelling, grammar, clarity and tone."/>
+        <bt:String id="WA.Button.Tooltip" DefaultValue="Open WriteAssist to check your writing and rewrite passages with AI."/>
+      </bt:LongStrings>
+    </Resources>
+  </VersionOverrides>
+</OfficeApp>

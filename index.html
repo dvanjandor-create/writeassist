@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WriteAssist for Word</title>
+  <meta name="description" content="Install WriteAssist, a grammar, style and AI writing assistant for Microsoft Word.">
+  <link rel="icon" type="image/png" href="assets/icon-32.png">
+  <link rel="stylesheet" href="app.css?v=1.0.0">
+  <link rel="stylesheet" href="site.css?v=1.0.0">
+</head>
+<body class="site">
+  <header class="site-top">
+    <span class="site-brand"><img src="assets/icon-64.png" width="28" height="28" alt=""><span>WriteAssist</span></span>
+    <a class="wa-link" href="demo.html">Try it in your browser</a>
+  </header>
+
+  <main class="site-main">
+    <section class="hero">
+      <p class="hero-line" aria-label="Example correction: discuss about becomes discuss">Please <span class="hero-fix"><del>discuss about</del><ins>discuss</ins></span> the revised work programme.</p>
+      <h1 class="hero-title">A writing assistant that lives in Microsoft Word</h1>
+      <p class="hero-sub">WriteAssist checks spelling, grammar, clarity and tone while you write, explains every suggestion, and rewrites passages with AI when you ask.</p>
+    </section>
+
+    <section class="install" aria-labelledby="install-title">
+      <h2 id="install-title">Install in three steps</h2>
+      <ol class="steps">
+        <li class="step">
+          <h3>Download your manifest</h3>
+          <p>The manifest is a small file that tells Word where WriteAssist lives. This one is made for <code id="site-url">this site</code>.</p>
+          <button class="wa-btn wa-btn-primary" type="button" id="download-manifest">Download manifest.xml</button>
+          <p class="site-warn" id="site-warn" role="alert" hidden></p>
+        </li>
+        <li class="step">
+          <h3>Add it to Word</h3>
+          <details class="platform" open>
+            <summary>Windows (Word 2016 or later)</summary>
+            <p>Put <code>manifest.xml</code> in the <code>install</code> folder of the WriteAssist package, then double-click <code>install-windows.cmd</code>. Close Word completely and open it again.</p>
+            <p class="site-small">The installer only writes a per-user setting, so it does not need administrator rights. If the button does not appear, use a <a href="https://learn.microsoft.com/office/dev/add-ins/testing/create-a-network-shared-folder-catalog-for-task-pane-and-content-add-ins" target="_blank" rel="noopener">shared folder catalogue</a> instead.</p>
+          </details>
+          <details class="platform">
+            <summary>Mac</summary>
+            <p>Put <code>manifest.xml</code> in the <code>install</code> folder and run <code>install-mac.sh</code>, or copy the file to <code>~/Library/Containers/com.microsoft.Word/Data/Documents/wef</code> yourself. Restart Word, then choose WriteAssist from <b>Home &gt; Add-ins</b>.</p>
+          </details>
+          <details class="platform">
+            <summary>Word on the web</summary>
+            <p>Open a document, choose <b>Home &gt; Add-ins &gt; More Add-ins</b>, then <b>My Add-ins &gt; Upload My Add-in</b>, and pick <code>manifest.xml</code>.</p>
+          </details>
+        </li>
+        <li class="step">
+          <h3>Open WriteAssist</h3>
+          <p>On the <b>Home</b> tab, choose <b>WriteAssist</b>. The panel opens beside your document and checks it straight away. Click any suggestion to jump to it.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="site-notes">
+      <div>
+        <h2>What it checks</h2>
+        <ul class="checks-list">
+          <li><span class="key key-correctness">Correctness</span>: spelling, grammar and punctuation</li>
+          <li><span class="key key-clarity">Clarity</span>: wordy phrases, long sentences, passive voice</li>
+          <li><span class="key key-engagement">Engagement</span>: weak words and clich&eacute;s</li>
+          <li><span class="key key-delivery">Delivery</span>: formality and nonstandard phrasing such as <i>do the needful</i></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Privacy</h2>
+        <p>Style checks run inside Word. Spelling and grammar checks send paragraph text to <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>. AI features send the text you choose to Anthropic using your own Claude API key. Online checking can be switched off in Settings.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">WriteAssist 1.0. Grammar checks by <a href="https://languagetool.org" target="_blank" rel="noopener">LanguageTool</a>.</footer>
+
+  <script>
+    (function () {
+      var base = window.location.href.replace(/[?#].*$/, '').replace(/[^\/]*$/, '');
+      var urlEl = document.getElementById('site-url');
+      var warn = document.getElementById('site-warn');
+      urlEl.textContent = base;
+
+      function showWarn(message) {
+        warn.textContent = message;
+        warn.hidden = false;
+        warn.removeAttribute('hidden');
+      }
+
+      function xmlEscape(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+      }
+
+      if (window.location.protocol === 'file:') {
+        showWarn('You opened this page from a file. Open it from its https:// web address instead; Word only loads add-ins over HTTPS.');
+      } else if (window.location.protocol !== 'https:') {
+        showWarn('Word only loads add-ins from https:// addresses. Host WriteAssist on an HTTPS site, such as GitHub Pages.');
+      }
+
+      document.getElementById('download-manifest').onclick = function () {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'manifest-template.xml?t=' + new Date().getTime(), true);
+        xhr.onload = function () {
+          if (xhr.status !== 200 && xhr.status !== 0) {
+            showWarn('Could not load manifest-template.xml (error ' + xhr.status + '). Check that all files were uploaded.');
+            return;
+          }
+          var xml = xhr.responseText.split('{{BASE_URL}}').join(xmlEscape(base));
+          var blob = new Blob([xml], { type: 'text/xml' });
+          if (window.navigator.msSaveBlob) {
+            window.navigator.msSaveBlob(blob, 'manifest.xml');
+            return;
+          }
+          var a = document.createElement('a');
+          a.href = window.URL.createObjectURL(blob);
+          a.download = 'manifest.xml';
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(function () {
+            document.body.removeChild(a);
+            window.URL.revokeObjectURL(a.href);
+          }, 500);
+        };
+        xhr.onerror = function () {
+          showWarn('Could not load manifest-template.xml. Open this page from its web address rather than from a file.');
+        };
+        xhr.send();
+      };
+    })();
+  </script>
+</body>
+</html>
